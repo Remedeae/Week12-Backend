@@ -8,10 +8,13 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/secure-data", verifyToken, (req, res) => {
-  res.json({
-    message: "This is protected data",
+  const firstName = req.user.name.split(" ")[0];
+  const secretData = {
     user: req.user,
-  });
+    message: "Your secrets are safe with us",
+    firstName,
+  };
+  res.json(secretData);
 });
 
 const PORT = process.env.PORT || 5001;
